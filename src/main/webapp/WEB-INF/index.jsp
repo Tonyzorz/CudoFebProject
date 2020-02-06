@@ -6,7 +6,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <title>Insert title here</title>
+<script>
+	$(function(){
+		$("#dialog").dialog();
+	});
+</script>
 </head>
 <body>
 <%@include file="jsp/header.jsp" %>
@@ -20,17 +29,30 @@
 		<div class="category">
 			<!-- 데이터베이스 연동해서 가지고오 -->
 			<ul>
-			<c:forEach var="febcolumn" items="${febcolumn }">
-				<li></li>
+			<c:forEach var="febcolumn" items="${febcolumns }">
+				<li>${febcolumn.febColumnTitle }</li>
 			</c:forEach>
 			</ul>
 			<hr>
 		</div>
 		<table border="1">
-			<tr>
-				<td></td>
-			</tr>
+			<c:forEach var="febboard" items="${febboard }">
+				<tr>
+					<td><span>하드코딩</span>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td><span>${febboard.febMainTitle }</span></td>
+				</tr>	
+				<tr>
+					<td>ColumnCategoryTitle</td>
+					<td>${febboard.febTitle }</td>
+					<td>${febboard.febContent }</td>
+				</tr>
+			</c:forEach>
+			
+			
 		</table>
+		<div id="dialog" title="Create new Post">
+			<p>This is the place where all the magic happens</p>
+		</div>
 	</div>
 
 </body>

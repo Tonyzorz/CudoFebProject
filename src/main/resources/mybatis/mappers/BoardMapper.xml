@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="com.febproject.basicui.mapper">
+<mapper namespace="com.febproject.basicui.mapper.BoardMapper">
 
+	<select id="categoryAll" resultType="FebColumnvo">
+		select * from febColumn
+	</select>
+	
+	<select id="boardAll" resultType="FebBoardvo">
+		select  fb.febmaintitle, fb.febtitle, fb.febcolumnid, fb.febcontent, fc.febcolumntitle, fcc.febcolumncategorytitle, fb.febColumnCategoryid 
+		from febboard fb
+		inner join febcolumn fc
+		on fb.febcolumnid = fc.febcolumnid
+		inner join febcolumncategory fcc
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid;
+	</select>
+	
+	<select id="objectAll" resultType="object">
+		select  fb.febmaintitle, fb.febtitle, fb.febcolumnid, fb.febcontent, fc.febcolumntitle, fcc.febcolumncategorytitle, fb.febColumnCategoryid 
+		from febboard fb
+		inner join febcolumn fc
+		on fb.febcolumnid = fc.febcolumnid
+		inner join febcolumncategory fcc
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid;
+	</select>
 </mapper>
