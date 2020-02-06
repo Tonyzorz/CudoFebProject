@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.taewon.mapper.BoardMapper">
+	<select id="selectAll"  resultType="BoardVO">
+		select * from board order by boardid desc
+	</select>
+	
+	<select id="selectAllPagination"  resultType="BoardVO" parameterType="PaginationVO">
+		select * from board order by boardid desc
+		limit #{startList}, #{listSize}
+	</select>
+	
+	<insert id="boardInsert" parameterType="BoardVO">
+		insert into board(busername, btitle, bcontent, bdate, bhit, bgroup, bindent, bstep, bfrom, bto) 
+		values(#{busername}, #{btitle}, #{bcontent}, now(), 0, 0, 0, 0, STR_TO_DATE('${bfrom}', '%m-%d-%Y'), STR_TO_DATE('${bto}', '%m-%d-%Y'));	
+	</insert>
+	
+	<select id="select" parameterType="int" resultType="BoardVO">
+		select * from board 
+		where boardid = #{boardid}
+	</select>
+	
+	<update id="boardEdit" parameterType="BoardVO">
+		update board 
+		set busername = #{busername}, btitle = #{btitle}, bcontent = #{bcontent}
+		where boardid = #{boardid}
+	</update>
+	
+	<update id="boardHit" parameterType="int">
+		update board 
+		set bhit = bHit + 1
+		where boardid = #{boardid}
+	</update>
+	
+	<delete id="boardDelete" parameterType="int">
+		delete from board
+		where boardid = #{boardid}
+	</delete>
+	
+	<select id="boardCheckTitle" parameterType="String" resultType="int">
+		select count(*) from board
+		where btitle = #{btitle}
+	</select>
+	
+	<select id="boardListCnt" resultType="int">
+		select count(*) from board;
+	</select>
+	
+	
+</mapper>
