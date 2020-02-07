@@ -1,5 +1,5 @@
-window.onload = function(){
-	//Get the modal
+window.onload = function() {
+	// Get the modal
 	var modal = document.getElementById("myModal");
 
 	// Get the button that opens the modal
@@ -8,7 +8,7 @@ window.onload = function(){
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
 
-	// When the user clicks the button, open the modal 
+	// When the user clicks the button, open the modal
 	btn.onclick = function() {
 		modal.style.display = "block";
 	}
@@ -24,15 +24,31 @@ window.onload = function(){
 			modal.style.display = "none";
 		}
 	}
-	
-}
 
-//for table viewing
-window.onload = function(){
+	// for table viewing
 	var boardTitle = document.getElementsByClassName("main_board_title")[0];
-	
+
 	var boardContent = document.getElementsByClassName("main_board_content")[0];
-	boardTitle.onclick = function(){
-		boardContent.style.display = "block";
+	// boardTitle.onclick = function(){
+	// if(boardContent.style == 'none'){
+	// boardContent.style.display = "block";
+	// }else{
+	// boardContent.style.display = "none";
+	// }
+	// }
+
+	boardTitle.onclick = function() {
+		if (boardContent.style.display == 'none') {
+			boardContent.style.display = 'block';
+		} else {
+			boardContent.style.display = 'none';
+		}
+		// document.getElementsByClassName("main_board_title")[0].classList.toggle("show");
 	}
+
+	// ajax
+	//var febColumnTitle = document.getElementById("febColumnTitle");
+	
+	
+
 }

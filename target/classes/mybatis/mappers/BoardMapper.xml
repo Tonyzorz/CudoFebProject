@@ -5,7 +5,7 @@
 <mapper namespace="com.febproject.basicui.mapper.BoardMapper">
 
 	<select id="categoryAll" resultType="FebColumnvo">
-		select * from febColumn
+		select * from febColumn 
 	</select>
 	
 	<select id="boardAll" resultType="FebBoardvo">
@@ -14,15 +14,47 @@
 		inner join febcolumn fc
 		on fb.febcolumnid = fc.febcolumnid
 		inner join febcolumncategory fcc
-        on fb.febcolumncategoryid = fcc.febcolumncategoryid;
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid
+        order by febid desc;
 	</select>
 	
-	<select id="objectAll" resultType="object">
+	<select id="boardAllJoin" resultType="BoardTotal">
 		select  fb.febmaintitle, fb.febtitle, fb.febcolumnid, fb.febcontent, fc.febcolumntitle, fcc.febcolumncategorytitle, fb.febColumnCategoryid 
 		from febboard fb
 		inner join febcolumn fc
 		on fb.febcolumnid = fc.febcolumnid
 		inner join febcolumncategory fcc
-        on fb.febcolumncategoryid = fcc.febcolumncategoryid;
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid
+        order by febid desc;
 	</select>
+	
+	<insert id="insertBoard" parameterType="BoardTotal">
+		insert into febboard(febtitle, febcontent, febcolumnid, febmaintitle, febcolumncategoryid)
+		values (#{febTitle}, #{febContent}, 
+		
+		(select distinct febcolumnid
+		from febcolumn
+		where febcolumntitle = #{febColumnTitle} 
+		limit 1), 
+		
+		#{febMainTitle}, 
+		(select distinct febcolumncategoryid
+		from febColumnCategory
+		where febColumnCategoryTitle = #{febColumnCategoryTitle}
+		limit 1));
+	</insert>
+	
+	<select id="getFebColumnId" parameterType="String" resultType="int">
+		select febColumnid
+		from febColumn
+		where febColumnTitle = #{febColumnTitle}
+	</select>
+	
+	<select id="getFebColumnCategoryTitle" parameterType="int" resultType="FebColumnCategoryvo">
+		select febColumnCategoryTitle 
+		from febColumnCategory
+		where febColumnID = #{febColumnCategoryId}
+	</select>
+	
+	
 </mapper>

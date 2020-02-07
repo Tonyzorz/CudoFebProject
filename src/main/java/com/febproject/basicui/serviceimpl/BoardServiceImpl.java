@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.febproject.basicui.mapper.BoardMapper;
 import com.febproject.basicui.service.BoardService;
+import com.febproject.basicui.vo.BoardTotal;
 import com.febproject.basicui.vo.FebBoardvo;
+import com.febproject.basicui.vo.FebColumnCategoryvo;
 import com.febproject.basicui.vo.FebColumnvo;
 
 @Service("BoardService")
@@ -29,8 +31,20 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<Object[]> objectAll() {
-		return boardMapper.objectAll();
+	public List<BoardTotal> boardAllJoin() {
+		return boardMapper.boardAllJoin();
 	}
+
+	@Override
+	public void insertBoard(BoardTotal boardTotal) {
+		boardMapper.insertBoard(boardTotal);
+	}
+
+	@Override
+	public List<FebColumnCategoryvo> getFebColumnCategoryTitle(String febColumnTitle) {
+		return boardMapper.getFebColumnCategoryTitle(boardMapper.getFebColumnId(febColumnTitle));
+	}
+
+	
 
 }
