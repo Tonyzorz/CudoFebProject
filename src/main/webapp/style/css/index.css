@@ -8,6 +8,10 @@ body {font-family: Arial, Helvetica, sans-serif; }
 .middle .main_left ul li{width: 50%; padding: 5px; height: 60px; text-align: center;}
 .middle .main_right{width: 75%%; height: 100%; float: left; padding-left: 30px;}
 .middle .main_right .search{width: 100%; height: 20%; text-align: center; margin: 40px auto;}
+.middle .main_right .search .searchDiv #searchImage{position: absolute; width: 20px; height: 20px;}
+.middle .main_right .search .searchDiv #searchBox{border-bottom: 2px solid gray;}
+
+
 .middle .main_right .category{width: 100%; margin: 20px auto;}
 .middle .main_right .category ul{list-style-type: none; width: 100%; height: 20%;}
 .middle .main_right .category ul li{float: left; border-bottom: 1px solid black;height: 100%; text-align: center; padding: 10px 20px 5px 20px;}

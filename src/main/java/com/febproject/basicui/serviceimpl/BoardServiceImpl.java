@@ -45,6 +45,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.getFebColumnCategoryTitle(boardMapper.getFebColumnId(febColumnTitle));
 	}
 
+	@Override
+	public List<BoardTotal> getBoardTotalAccordingToFebColumnTitle(String febColumnTitle) {
+		return boardMapper.getBoardTotalAccordingToFebColumnTitle(febColumnTitle);
+	}
+
 	
 
 }

@@ -37,17 +37,32 @@ window.onload = function() {
 	// }
 	// }
 
-	boardTitle.onclick = function() {
-		if (boardContent.style.display == 'none') {
-			boardContent.style.display = 'block';
-		} else {
-			boardContent.style.display = 'none';
-		}
-		// document.getElementsByClassName("main_board_title")[0].classList.toggle("show");
+	var boardTitleId = document.getElementById('main_board_title');
+	var boardContent = document.getElementById("main_board_content");
+
+	boardTitleId.onclick = function(){
+		alert(boardTitleId.length);
+		for(var i = 0; i < boardTitleId.length; i++)(function(i){
+			if(boardContent[i].style.display == 'none'){
+				boardContent[i].style.display = 'block';
+			} else {
+				boardContent[i].style.display = 'none';
+			}
+		})(i);
 	}
+//	boardTitle.onclick = function() {
+//		if (boardContent.style.display == 'none') {
+//			boardContent.style.display = 'block';
+//		} else {
+//			boardContent.style.display = 'none';
+//		}
+//	}
 
 	// ajax
 	//var febColumnTitle = document.getElementById("febColumnTitle");
+	
+	//category select part
+	
 	
 	
 

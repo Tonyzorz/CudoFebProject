@@ -21,4 +21,7 @@ public interface BoardService {
 		
 	//Get febColumnCategoryTitle
 	List<FebColumnCategoryvo> getFebColumnCategoryTitle(String febColumnTitle);
+	
+	//Get board data according to febColumnTitle
+	List<BoardTotal> getBoardTotalAccordingToFebColumnTitle(String febColumnTitle);
 }

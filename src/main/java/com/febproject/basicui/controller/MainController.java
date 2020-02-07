@@ -31,9 +31,11 @@ public class MainController {
 		System.out.println(boardService.categoryAll());
 		
 		model.addAttribute("febboard", boardService.boardAllJoin());
+		model.addAttribute("febColumnCategoryTitleDefault", boardService.getFebColumnCategoryTitle("회원"));
 		System.out.println(boardService.boardAllJoin());
 		return "index";
 	}
+	
 	
 	@RequestMapping(value = "insert.do", produces="text/plain; charset=UTF-8")
 	public String insertBoard(BoardTotal boardTotal, HttpServletRequest request/* ,@RequestParam(value = "") String febColumnTitle*/){
@@ -48,13 +50,19 @@ public class MainController {
 		return "redirect:index.do";
 	}
 	
+	//Modal select option click and get the according options
 	@RequestMapping(value = "getFebColumnCategoryTitle.do")
 	@ResponseBody
 	public List<FebColumnCategoryvo> getFebColumnCategoryTitle(@RequestBody String febColumnTitleString){
-		System.err.println("IT ENTERED!");
-		System.err.println(febColumnTitleString);
-		System.out.println(boardService.getFebColumnCategoryTitle(febColumnTitleString).size());
 		return boardService.getFebColumnCategoryTitle(febColumnTitleString);
+	}
+	
+	//Category Title click ajax function
+	@RequestMapping(value = "getBoardTotalAccordingToFebColumnTitle.do")
+	@ResponseBody
+	public List<BoardTotal> getBoardTotalAccordingToFebColumnTitle(@RequestBody String febColumnTitle){
+		System.err.println("IT ENTERED GETBOARDTOTALACCORDINGTOFEBCOLUMTITLE");
+		return boardService.getBoardTotalAccordingToFebColumnTitle(febColumnTitle);
 	}
 	
 }

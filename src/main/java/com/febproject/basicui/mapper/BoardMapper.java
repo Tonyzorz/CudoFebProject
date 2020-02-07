@@ -30,5 +30,8 @@ public interface BoardMapper {
 	//Get febColumnCategoryTitle
 	List<FebColumnCategoryvo> getFebColumnCategoryTitle(int febColumnCategoryId);
 	
+	//Get board data according to febColumnTitle
+	List<BoardTotal> getBoardTotalAccordingToFebColumnTitle(String febColumnTitle);
+	
 	
 }

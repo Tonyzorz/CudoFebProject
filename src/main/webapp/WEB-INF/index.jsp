@@ -39,14 +39,18 @@
 		<div class="main_right">
 		
 			<div class="search">
-			Search part
+				<div class="searchDiv">
+					<img src="style/image/searchimage.jpeg" id="searchImage">
+					<input type="text" id="searchBox">
+					<button type="button" id="searchButton">검색</button>
+				</div>
 			</div>
 			
 			<div class="category">
 				<!-- 데이터베이스 연동해서 가지고오 -->
 				<ul>
 					<c:forEach var="febcolumn" items="${febcolumns }">
-						<li>${febcolumn.febColumnTitle }</li>
+						<li id="category_${febcolum.febColumn }">${febcolumn.febColumnTitle }</li>
 					</c:forEach>
 				</ul>
 			</div>
@@ -54,12 +58,12 @@
 			<div class="table">
 				<table >
 					<c:forEach var="febboard" items="${febboard }">
-						<tr class="main_board_title">
+						<tr class="main_board_title" id="main_board_title">
 							<td id="febCategory">${febboard.febColumnTitle }</td>
 							<td id="febMainTitle">${febboard.febMainTitle }</td>
 						</tr>
 						
-						<tr class="main_board_content">
+						<tr class="main_board_content" id="main_board_content">
 							<td id="febCategoryTitle">${febboard.febColumnCategoryTitle }</td>
 							<td id="febTitle">${febboard.febTitle }</td>
 							<td id="febContent">${febboard.febContent }</td>
@@ -87,7 +91,9 @@
 				</select>
 				 
 				<select name="febColumnCategoryTitle" id="febColumnCategoryTitle">
-					<option value="카메라 및 센서" >카메라 및 센서</option>
+					<c:forEach var="febColumnCategory" items="${febColumnCategoryTitleDefault }">
+						<option value="${febColumnCategory.febColumnCategoryTitle }" >${febColumnCategory.febColumnCategoryTitle }</option>
+					</c:forEach>
 				</select>
 				
 				<label for="febMainTitle">Main Title</label>
