@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.febproject.basicui.service.BoardService;
 import com.febproject.basicui.vo.BoardTotal;
@@ -23,29 +25,28 @@ public class MainController {
 	BoardService boardService;
 	
 	@RequestMapping(value = "index.do")
-	public String goIndex(Model model){
+	public String goIndex(Model model, @ModelAttribute("error") Object error){
 		model.addAttribute("febcolumns", boardService.categoryAll());
-		//model.addAttribute("febboard", boardService.boardAll());
-		
-		boardService.boardAll().get(0).getFebColumnId();
-		System.out.println(boardService.categoryAll());
-		
 		model.addAttribute("febboard", boardService.boardAllJoin());
 		model.addAttribute("febColumnCategoryTitleDefault", boardService.getFebColumnCategoryTitle("회원"));
-		System.out.println(boardService.boardAllJoin());
+		model.addAttribute("error", error);
 		return "index";
 	}
 	
 	
 	@RequestMapping(value = "insert.do", produces="text/plain; charset=UTF-8")
-	public String insertBoard(BoardTotal boardTotal, HttpServletRequest request/* ,@RequestParam(value = "") String febColumnTitle*/){
+	public String insertBoard(RedirectAttributes redirectAttributes, BoardTotal boardTotal, HttpServletRequest request/* ,@RequestParam(value = "") String febColumnTitle*/){
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(boardTotal.getFebColumnTitle());
+		if(boardTotal.getFebColumnCategoryTitle() == null || boardTotal.getFebContent().equals("") ||
+				boardTotal.getFebMainTitle().equals("") || boardTotal.getFebTitle().equals("")){
+			
+			redirectAttributes.addFlashAttribute("error", "Please fill out all the blanks");
+		}
 		boardService.insertBoard(boardTotal);
 		return "redirect:index.do";
 	}
@@ -60,9 +61,24 @@ public class MainController {
 	//Category Title click ajax function
 	@RequestMapping(value = "getBoardTotalAccordingToFebColumnTitle.do")
 	@ResponseBody
-	public List<BoardTotal> getBoardTotalAccordingToFebColumnTitle(@RequestBody String febColumnTitle){
+	public List<BoardTotal> getBoardTotalAccordingToFebColumnTitle(@RequestBody String categoryValue){
 		System.err.println("IT ENTERED GETBOARDTOTALACCORDINGTOFEBCOLUMTITLE");
-		return boardService.getBoardTotalAccordingToFebColumnTitle(febColumnTitle);
+		System.out.println(categoryValue);
+		System.out.println(boardService.getBoardTotalAccordingToFebColumnTitle(categoryValue));
+		if(categoryValue.equals("전체")){
+			return boardService.boardAllJoin();
+		} else {
+			return boardService.getBoardTotalAccordingToFebColumnTitle(categoryValue);
+		}
 	}
+	
+	@RequestMapping(value = "getSearchedBoard.do")
+	public String getSearchBoard(String searchedTitle, Model model, RedirectAttributes redirectAttributes){
+		model.addAttribute("febcolumns", boardService.categoryAll());
+		model.addAttribute("febboard", boardService.boardAllJoin());
+		model.addAttribute("febboard", boardService.getSearchedBoard(searchedTitle));
+		return "index";
+	}
+	
 	
 }

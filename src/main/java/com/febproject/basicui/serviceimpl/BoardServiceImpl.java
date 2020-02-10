@@ -50,6 +50,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.getBoardTotalAccordingToFebColumnTitle(febColumnTitle);
 	}
 
+	@Override
+	public List<BoardTotal> getSearchedBoard(String searchedTitle) {
+		return boardMapper.getSearchedBoard(searchedTitle);
+	}
+
 	
 
 }

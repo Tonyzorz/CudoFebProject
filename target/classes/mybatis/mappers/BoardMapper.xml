@@ -67,5 +67,17 @@
         order by febid desc;
 	</select>
 	
+	<select id="getSearchedBoard" resultType="BoardTotal" parameterType="String">
+		select  fb.febmaintitle, fb.febtitle, fb.febcolumnid, fb.febcontent, fc.febcolumntitle, fcc.febcolumncategorytitle, fb.febColumnCategoryid 
+		from febboard fb
+		inner join febcolumn fc
+		on fb.febcolumnid = fc.febcolumnid
+		inner join febcolumncategory fcc
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid
+       where febtitle LIKE CONCAT('%', #{searchedTitle}, '%')
+<!-- 		WHERE febtitle LIKE '%'||#{searchedTitle}||'%'         
+ -->		order by febid desc;
+      
+	</select>
 	
 </mapper>

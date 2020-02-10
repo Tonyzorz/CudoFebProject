@@ -23,7 +23,6 @@
 </head>
 <body>
 	<%@include file="jsp/header.jsp"%>
-	
 	<div class="middle">
 	
 		<div class="main_left">
@@ -40,23 +39,25 @@
 		
 			<div class="search">
 				<div class="searchDiv">
-					<img src="style/image/searchimage.jpeg" id="searchImage">
-					<input type="text" id="searchBox">
-					<button type="button" id="searchButton">검색</button>
+					<form action="getSearchedBoard.do">
+<!-- 					<img src="style/image/searchimage.jpeg" id="searchImage">-->	
+						<input type="text" id="searchBox" name="searchedTitle">
+						<input type="submit" id="searchButton">
+					</form>
 				</div>
 			</div>
 			
 			<div class="category">
 				<!-- 데이터베이스 연동해서 가지고오 -->
 				<ul>
-					<c:forEach var="febcolumn" items="${febcolumns }">
-						<li id="category_${febcolum.febColumn }">${febcolumn.febColumnTitle }</li>
+					<c:forEach var="febcolumn" items="${febcolumns }" varStatus="loop">
+						<li id="category_${loop.index}" onclick="febCategory(this.id)" value="${febcolumn.febColumnTitle }">${febcolumn.febColumnTitle }</li>
 					</c:forEach>
 				</ul>
 			</div>
 			
 			<div class="table">
-				<table >
+				<table>
 					<c:forEach var="febboard" items="${febboard }">
 						<tr class="main_board_title" id="main_board_title">
 							<td id="febCategory">${febboard.febColumnTitle }</td>
@@ -86,14 +87,14 @@
 			
 				<select name="febColumnTitle" id="febColumnTitle" onchange="febColumn(this.value);">
 					<c:forEach var="febcolumn" items="${febcolumns }">
-						<option value="${febcolumn.febColumnTitle }">${febcolumn.febColumnTitle }</option>
+						<option value="${febcolumn.febColumnTitle }" value="${febcolumn.febColumnTitle }">${febcolumn.febColumnTitle }</option>
 					</c:forEach>
 				</select>
 				 
 				<select name="febColumnCategoryTitle" id="febColumnCategoryTitle">
-					<c:forEach var="febColumnCategory" items="${febColumnCategoryTitleDefault }">
+					<%-- <c:forEach var="febColumnCategory" items="${febColumnCategoryTitleDefault }">
 						<option value="${febColumnCategory.febColumnCategoryTitle }" >${febColumnCategory.febColumnCategoryTitle }</option>
-					</c:forEach>
+					</c:forEach> --%>
 				</select>
 				
 				<label for="febMainTitle">Main Title</label>
@@ -110,6 +111,7 @@
 	<script>
 	function febColumn(febColumnTitle) {
 		var febColumnTitleString = document.getElementById("febColumnTitle").value;
+		
 		$.ajax({
 			type : "POST",
 			url : "getFebColumnCategoryTitle.do",
@@ -131,6 +133,58 @@
 			}
 		})
 	}
+	
+	function febCategory(clicked_id){
+		//var categoryValue = document.getElementById('category').getAttribute('value');
+		var categoryValue = document.getElementById(clicked_id).getAttribute('value');
+		
+		//alert(testing);
+		$.ajax({
+			type: 'POST',
+			url: 'getBoardTotalAccordingToFebColumnTitle.do',
+			data: categoryValue,
+			contentType : 'application/json; charset=UTF-8',
+			success: function(data){
+				$('.table').find('table').remove();
+				$('.table').append("<table></table>");
+				
+				$.each(data, function(i){
+					$('.table').find('table').append(
+						"<tr class='main_board_title' id='main_board_title'>"+
+							"<td id='febCategory'>" + data[i].febColumnTitle + "</td>" +
+							'<td id="febMainTitle">' + data[i].febMainTitle + "</td>" + 
+						"</tr>" +
+						"<tr class='main_board_content' id='main_board_content'>" + 
+							"<td id='febCategoryTitle'>" + data[i].febColumnCategoryTitle + "</td>" +
+							"<td id='febTitle'>" + data[i].febTitle + "</td>" +
+							"<td id='febContent'>" + data[i].febContent + "</td>" +
+						"</tr>"
+									
+					);
+				})
+			}
+		})
+	}
+	
+	
+	
+	
+	
+	/* function searchBoard(){
+		var searchedTitle = document.getElementById('searchBox').value;
+		
+		$.ajax({
+			type: 'POST',
+			url: 'getSearchedBoard.do',
+			data: searchedTitle,
+			contentType: 'application/json; charset=UTF-8',
+			success: function(data){
+				
+			}
+		})
+	} */
+	
+	
 	</script>
 	
 </body>

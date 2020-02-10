@@ -24,4 +24,7 @@ public interface BoardService {
 	
 	//Get board data according to febColumnTitle
 	List<BoardTotal> getBoardTotalAccordingToFebColumnTitle(String febColumnTitle);
+	
+	//Get searched board 
+	List<BoardTotal> getSearchedBoard(String searchedTitle);
 }
