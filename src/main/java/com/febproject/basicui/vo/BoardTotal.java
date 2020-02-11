@@ -1,5 +1,7 @@
 package com.febproject.basicui.vo;
 
+import org.apache.log4j.Logger;
+
 public class BoardTotal {
 	//FebBoardvo
 	private int febId;
@@ -15,7 +17,7 @@ public class BoardTotal {
 	//FebColumnvo
 	private int febColumn;
 	private String febColumnTitle;
-	
+		
 	@Override
 	public String toString() {
 		return "BoardTotal [febId=" + febId + ", febMainTitle=" + febMainTitle + ", febTitle=" + febTitle

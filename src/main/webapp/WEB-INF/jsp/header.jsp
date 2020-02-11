@@ -123,13 +123,14 @@
 	
 }
 </style>
+
 </head>
 
 
 <body>
 	<div class="menubar">
 		<ul>
-			<li><a href="#">Home</a></li>
+			<li><a href="index.do">Home</a></li>
 			<li><a href="#" id="current">Products</a>
 				<ul>
 					<li><a href="#">Sliders</a></li>
@@ -156,5 +157,7 @@
 			</li>
 		</ul>
 	</div>
+	
+	
 </body>
 </html>
