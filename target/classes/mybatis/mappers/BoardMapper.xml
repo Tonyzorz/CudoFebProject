@@ -5,7 +5,7 @@
 <mapper namespace="com.febproject.basicui.mapper.BoardMapper">
 
 	<select id="categoryAll" resultType="FebColumnvo">
-		select * from febColumn 
+		select * from febColumn
 	</select>
 	
 	<select id="boardAll" resultType="FebBoardvo">
@@ -75,9 +75,88 @@
 		inner join febcolumncategory fcc
         on fb.febcolumncategoryid = fcc.febcolumncategoryid
        where febtitle LIKE CONCAT('%', #{searchedTitle}, '%')
-<!-- 		WHERE febtitle LIKE '%'||#{searchedTitle}||'%'         
- -->		order by febid desc;
+		order by febid desc;
       
 	</select>
 	
-</mapper>
+</mapper> 
+<!-- <mapper namespace="com.febproject.basicui.mapper.BoardMapper">
+
+	<select id="categoryAll" resultType="FebColumnvo">
+		select * from febcolumn
+	</select>
+	
+	<select id="boardAll" resultType="FebBoardvo">
+		select  fb.febmaintitle, fb.febtitle, fb.febcolumnid, fb.febcontent, fc.febcolumntitle, fcc.febcolumncategorytitle, fb.febColumnCategoryid 
+		from febboard fb
+		inner join febcolumn fc
+		on fb.febcolumnid = fc.febcolumnid
+		inner join febColumnCategory fcc
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid
+        order by febid desc;
+	</select>
+	
+	<select id="boardAllJoin" resultType="BoardTotal">
+		select  fb.febmaintitle, fb.febtitle, fb.febcolumnid, fb.febcontent, fc.febcolumntitle, fcc.febcolumncategorytitle, fb.febColumnCategoryid 
+		from febboard fb
+		inner join febcolumn fc
+		on fb.febcolumnid = fc.febcolumnid
+		inner join febColumnCategory fcc
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid
+        order by febid desc;
+	</select>
+	
+	<insert id="insertBoard" parameterType="BoardTotal">
+		insert into febboard(febtitle, febcontent, febcolumnid, febmaintitle, febcolumncategoryid)
+		values (#{febTitle}, #{febContent}, 
+		
+		(select distinct febcolumnid
+		from febcolumn
+		where febcolumntitle = #{febColumnTitle} 
+		limit 1), 
+		
+		#{febMainTitle}, 
+		(select distinct febcolumncategoryid
+		from febColumnCategory
+		where febColumnCategoryTitle = #{febColumnCategoryTitle}
+		limit 1));
+	</insert>
+	
+	<select id="getFebColumnId" parameterType="String" resultType="int">
+		select febcolumnid
+		from febcolumn
+		limit 1;
+ 		where febcolumntitle = #{febColumnTitle}
+	</select>
+	
+	<select id="getFebColumnCategoryTitle" parameterType="int" resultType="FebColumnCategoryvo">
+		select febColumnCategoryTitle 
+		from febColumnCategory
+		where febColumnID = #{febColumnCategoryId}
+	</select>
+	
+	<select id="getBoardTotalAccordingToFebColumnTitle" resultType="BoardTotal" parameterType="String">
+		select  fb.febmaintitle, fb.febtitle, fb.febcolumnid, fb.febcontent, fc.febcolumntitle, fcc.febcolumncategorytitle, fb.febColumnCategoryid 
+		from febboard fb
+		inner join febcolumn fc
+		on fb.febcolumnid = fc.febcolumnid
+		inner join febColumnCategory fcc
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid
+        where fc.febcolumntitle = #{febColumnTitle}
+        order by febid desc;
+	</select>
+	
+	<select id="getSearchedBoard" resultType="BoardTotal" parameterType="String">
+		select  fb.febmaintitle, fb.febtitle, fb.febcolumnid, fb.febcontent, fc.febcolumntitle, fcc.febcolumncategorytitle, fb.febColumnCategoryid 
+		from febboard fb
+		inner join febcolumn fc
+		on fb.febcolumnid = fc.febcolumnid
+		inner join febColumnCategory fcc
+        on fb.febcolumncategoryid = fcc.febcolumncategoryid
+       where febtitle LIKE CONCAT('%', #{searchedTitle}, '%')
+		WHERE febtitle LIKE '%'||#{searchedTitle}||'%'         
+		order by febid desc;
+      
+	</select>
+	
+</mapper> -->

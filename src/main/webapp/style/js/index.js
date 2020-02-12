@@ -1,4 +1,51 @@
 window.onload = function() {
+	
+	//searchBox regex
+	document.getElementById("searchBox").addEventListener("keyup", checkTyping);
+	function checkTyping(){
+		var searchString = document.getElementById("searchBox").value;
+		var searchMessage = document.getElementById("searchMessage");
+		var regexTest = /[`~!@#$%^&*()-_=+]/g;
+		
+		if(regexTest.test(searchString)){
+			searchMessage.className = '';
+			searchMessage.classList.add("regexAngry");
+			searchMessage.innerHTML = "이상한 글씨 쓰지마세요! >:(";
+			
+		}else if(searchString != ""){
+			$.ajax({
+				type: "POST",
+				url: "existSearchedBoard.do",
+				data: searchString,
+				contentType : 'application/json; charset=UTF-8',
+				success: function(data){
+					//1 = have
+					//0 = does not have
+					console.log(data);
+					if(data) {
+						searchMessage.className = '';
+						searchMessage.classList.add("regexRight");
+						searchMessage.innerHTML = "검색된 타이틀이 디비에 있어요! :)";
+					}else if(data == 0){
+						searchMessage.className = '';
+						searchMessage.classList.add("regexWrong");
+						searchMessage.innerHTML = "검색된 타이틀이 디비에 없어요! :(";
+					}else{
+						
+					}
+					
+				}
+			});
+			
+		} else{
+			searchMessage.className = '';
+			searchMessage.classList.add("regexDefault");
+			searchMessage.innerHTML = "타이틀을 검색해보세요! :|";
+		}
+		
+	};
+	
+	
 	// Get the modal
 	var modal = document.getElementById("myModal");
 
@@ -7,10 +54,13 @@ window.onload = function() {
 
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
+	
 
 	// When the user clicks the button, open the modal
 	btn.onclick = function() {
+		alert("asdf");
 		modal.style.display = "block";
+		
 	}
 
 	// When the user clicks on <span> (x), close the modal
@@ -26,40 +76,12 @@ window.onload = function() {
 	}
 
 	// for table viewing
-	var boardTitle = document.getElementsByClassName("main_board_title")[0];
-
-	var boardContent = document.getElementsByClassName("main_board_content")[0];
-	// boardTitle.onclick = function(){
-	// if(boardContent.style == 'none'){
-	// boardContent.style.display = "block";
-	// }else{
-	// boardContent.style.display = "none";
-	// }
-	// }
-	
-	var boardTitleId = document.getElementById('main_board_title');
-	var boardContent = document.getElementById("main_board_content");
-
-//	boardTitleId.onclick = function(){
-//		alert("clickcy clicky");
-//		for(var i = 0; i < boardTitleId.length; i++)(function(i){
-//			if(boardContent[i].style.display == 'none'){
-//				boardContent[i].style.display = 'block';
-//			} else {
-//				boardContent[i].style.display = 'none';
-//			}
-//		})(i);
-//	}
-	
 	$('.main_board_title>#febMainTitle').click(function(){
-		alert('here');
-		//$(this).parent().siblings('#main_board_content').show();
-		//$(this).parent().find('#main_board_content').show();
-		//$(this).parent().siblings('#main_board_content').toggle();
 		$(this).parent().next().toggle();
 	});
 
-
+	
+	
 	
 	
 

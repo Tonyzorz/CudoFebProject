@@ -9,11 +9,12 @@
 <link rel="stylesheet" type="text/css" href="style/css/index.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ -->
 
 
 <script type="text/javascript" src="style/js/index.js"></script>
@@ -40,10 +41,13 @@
 			<div class="search">
 				<div class="searchDiv">
 					<form action="getSearchedBoard.do">
+					
 <!-- 					<img src="style/image/searchimage.jpeg" id="searchImage">-->	
 						<input type="text" id="searchBox" name="searchedTitle">
 						<input type="submit" id="searchButton">
 					</form>
+					<span class="regexDefault" id="searchMessage">타이틀을 입력해주세요!</span>
+					
 				</div>
 			</div>
 			
@@ -84,31 +88,52 @@
 		<div class="modal-content">
 			<span class="close">&times;</span>
 			<form action="insert.do" method="GET">
-			
-				<select name="febColumnTitle" id="febColumnTitle" onchange="febColumn(this.value);">
-					<c:forEach var="febcolumn" items="${febcolumns }">
-						<option value="${febcolumn.febColumnTitle }" value="${febcolumn.febColumnTitle }">${febcolumn.febColumnTitle }</option>
-					</c:forEach>
-				</select>
-				 
-				<select name="febColumnCategoryTitle" id="febColumnCategoryTitle">
-					<%-- <c:forEach var="febColumnCategory" items="${febColumnCategoryTitleDefault }">
-						<option value="${febColumnCategory.febColumnCategoryTitle }" >${febColumnCategory.febColumnCategoryTitle }</option>
-					</c:forEach> --%>
-				</select>
+				<div>
+<!-- 					<label for="febMainTitle">Main Title</label>
+ -->					<input type="text" name="febMainTitle" id="febMainTitle">
+					
+					<span class="regexDefault">Type your main title</span>
+				</div>
+				<div>
+					<label for="febTitle">Title</label>
+					<input type="text" name="febTitle" id="febTitle">
+					
+					<span class="regexDefault">Type your title</span>
+				</div>
+				<div>
+					<select name="febColumnTitle" id="febColumnTitle" onchange="febColumn(this.value);">
+						<c:forEach var="febcolumn" items="${febcolumns }">
+							<option value="${febcolumn.febColumnTitle }" value="${febcolumn.febColumnTitle }">${febcolumn.febColumnTitle }</option>
+						</c:forEach>
+					</select>
+					 
+					<select name="febColumnCategoryTitle" id="febColumnCategoryTitle">
+						<%-- <c:forEach var="febColumnCategory" items="${febColumnCategoryTitleDefault }">
+							<option value="${febColumnCategory.febColumnCategoryTitle }" >${febColumnCategory.febColumnCategoryTitle }</option>
+						</c:forEach> --%>
+					</select>
+					
+					<span class="regexDefault">Select your category according to your category</span>
+				</div>
+				<div>
+					<textarea id="febContent" name="febContent"></textarea>
+				</div>
+				<div>
+					<input type="submit" value="submit">
+				</div>
 				
-				<label for="febMainTitle">Main Title</label>
-				<input type="text" name="febMainTitle">
-				
-				<label for="febTitle">Title</label>
-				<input type="text" name="febTitle">
-				
-				<textarea name="febContent"></textarea>
-				<input type="submit" value="submit">
 			</form>
 		</div>
 	</div>
 	<script>
+	//modal input box ajax
+	
+	document.getElementById("febMainTitle").addEventListener("keyup", checkTypingss);
+	function checkTypingss(){
+		var x = document.getElementById("febMainTitle");
+		x.value = x.value.toUpperCase();
+	};
+	
 	function febColumn(febColumnTitle) {
 		var febColumnTitleString = document.getElementById("febColumnTitle").value;
 		
@@ -132,7 +157,7 @@
 				alert("error");
 			}
 		})
-	}
+	};
 	
 	function febCategory(clicked_id){
 		//var categoryValue = document.getElementById('category').getAttribute('value');
@@ -164,26 +189,7 @@
 				})
 			}
 		})
-	}
-	
-	
-	
-	
-	
-	/* function searchBoard(){
-		var searchedTitle = document.getElementById('searchBox').value;
-		
-		$.ajax({
-			type: 'POST',
-			url: 'getSearchedBoard.do',
-			data: searchedTitle,
-			contentType: 'application/json; charset=UTF-8',
-			success: function(data){
-				
-			}
-		})
-	} */
-	
+	};
 	
 	</script>
 	

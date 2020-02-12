@@ -42,6 +42,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<FebColumnCategoryvo> getFebColumnCategoryTitle(String febColumnTitle) {
+		System.out.println("THIS IS THE VALUE OF : FEBCOLUMNTITIEL : " + febColumnTitle);
 		return boardMapper.getFebColumnCategoryTitle(boardMapper.getFebColumnId(febColumnTitle));
 	}
 

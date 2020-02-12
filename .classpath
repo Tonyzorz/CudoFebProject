@@ -53,6 +53,5 @@
 			<attribute name="maven.scope" value="provided"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/apache-log4j-2.13.0-bin.tar.gz"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

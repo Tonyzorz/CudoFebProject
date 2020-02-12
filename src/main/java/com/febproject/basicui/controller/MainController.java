@@ -22,20 +22,15 @@ import com.febproject.basicui.vo.FebColumnCategoryvo;
 @Controller
 public class MainController {
 
-	private static Logger logger = Logger.getLogger(MainController.class.getName());
 	
 	@Resource(name = "BoardService")
 	BoardService boardService;
 	
 	@RequestMapping(value = "index.do")
-	public String goIndex(Model model, @ModelAttribute("error") Object error){
+	public String goIndex(Model model){
 		model.addAttribute("febcolumns", boardService.categoryAll());
 		model.addAttribute("febboard", boardService.boardAllJoin());
 		model.addAttribute("febColumnCategoryTitleDefault", boardService.getFebColumnCategoryTitle("회원"));
-		model.addAttribute("error", error);
-		
-		logger.fatal("log4j: logger.fatal()");
-		logger.debug("log4j:logger.debug()");
 		return "index";
 	}
 	
@@ -85,6 +80,15 @@ public class MainController {
 		model.addAttribute("febboard", boardService.boardAllJoin());
 		model.addAttribute("febboard", boardService.getSearchedBoard(searchedTitle));
 		return "index";
+	}
+	
+	//ajax checking if searching value exists
+	@RequestMapping(value = "existSearchedBoard.do")
+	@ResponseBody
+	public int existSearchedBoard(@RequestBody String searchString){
+		System.out.println(searchString);
+		//1 = have        0 = does not have    
+		return (boardService.getSearchedBoard(searchString).size() == 0) ? 0 : 1;
 	}
 	
 	

@@ -1,0 +1,9 @@
+com/febproject/basicui/service/BoardService.class
+com/febproject/basicui/vo/FebBoardvo.class
+com/febproject/basicui/vo/FebColumnvo.class
+com/febproject/basicui/mapper/BoardMapper.class
+com/febproject/basicui/vo/BoardTotal.class
+com/febproject/basicui/vo/Paginationvo.class
+com/febproject/basicui/serviceimpl/BoardServiceImpl.class
+com/febproject/basicui/controller/MainController.class
+com/febproject/basicui/vo/FebColumnCategoryvo.class
