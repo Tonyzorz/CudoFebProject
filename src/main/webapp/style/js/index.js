@@ -5,7 +5,7 @@ window.onload = function() {
 	function checkTyping(){
 		var searchString = document.getElementById("searchBox").value;
 		var searchMessage = document.getElementById("searchMessage");
-		var regexTest = /[`~!@#$%^&*()-_=+]/g;
+		var regexTest = /[^a-zㄱ-ㅎㅏ-ㅣ가-힣0-9]/gi;
 		
 		if(regexTest.test(searchString)){
 			searchMessage.className = '';

@@ -64,9 +64,6 @@ public class MainController {
 	@RequestMapping(value = "getBoardTotalAccordingToFebColumnTitle.do")
 	@ResponseBody
 	public List<BoardTotal> getBoardTotalAccordingToFebColumnTitle(@RequestBody String categoryValue){
-		System.err.println("IT ENTERED GETBOARDTOTALACCORDINGTOFEBCOLUMTITLE");
-		System.out.println(categoryValue);
-		System.out.println(boardService.getBoardTotalAccordingToFebColumnTitle(categoryValue));
 		if(categoryValue.equals("전체")){
 			return boardService.boardAllJoin();
 		} else {
@@ -86,7 +83,6 @@ public class MainController {
 	@RequestMapping(value = "existSearchedBoard.do")
 	@ResponseBody
 	public int existSearchedBoard(@RequestBody String searchString){
-		System.out.println(searchString);
 		//1 = have        0 = does not have    
 		return (boardService.getSearchedBoard(searchString).size() == 0) ? 0 : 1;
 	}
